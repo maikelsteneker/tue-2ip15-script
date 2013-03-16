@@ -1,6 +1,7 @@
 #!/bin/bash
 
-d=contents # destination directory
+d=contents  # destination directory
+b=0         # set to 1 if enterDirectory changed the directory until it goes back
 
 # Stops the script with an error message.
 function die {
@@ -27,58 +28,74 @@ function process {
 # Processes project in the current directory.
 function processThis {
     enterDirectory
-    pwd
+    #pwd
+    touch maikelwashere
     doCheckstyle
     doJavadoc
     #doJUnit # included in Cobertura
     doCobertura
-    #cd .. # only do this if enterDirectory entered something
+    test $b -eq 0 || exitDirectory
 }
 
 # Extracts all zip files in current directory.
 function extract {
-    for z in *.zip; do unzip "$z"; rm "$z"; done
-}
-
-# Exists the program if $1 does not exist.
-function checkExistance {
-    [ -f $1 ] || die "$1 does not exist"
+    for z in *.zip; do unzip -q -n "$z"; rm "$z"; done
 }
 
 # Changes to a directory if its the only one in the current directory.
 function enterDirectory {
-    #TODO: write implementation
-    echo
+    n=$(ls -l | wc -l) # number of files + 1
+    test $n -gt 2 || cdDir # change directory if there is only 1 file
+}
+
+# Moves up one dir level (and sets b to 0).
+function exitDirectory {
+    cd ..
+    b=0
+}
+
+# Enters a random (intended to be the only) directory (and sets b to 1).
+function cdDir {
+    for f in *
+    do
+        cd "$f"
+    done
+    b=1
 }
 
 # Generates checkstyle report for project in current directory.
 function doCheckstyle {
     #TODO: write implementation
-    echo
+    test
 }
 
 # Generates Javadoc report for project in current directory.
 function doJavadoc {
     #TODO: write implementation
-    echo
+    test
 }
 
 # Runs JUnit test cases and generates report in current directory.
 function doJUnit {
     #TODO: write implementation
-    echo
+    test
 }
 
 # Generates Cobertura report for project in current directory.
 function doCobertura {
     #TODO: write implementation
-    echo
+    test
+}
+
+# entry point function
+function main {
+    [ "$#" -eq 1 ] || die "syntax: script [archive]" # check number of arguments
+    [ -f $1 ] || die "$1 does not exist" # check existance of file $1
+    mkdir $d
+    unzip -q -n "$1" -d $d
+    cd $d
+    process
 }
 
 # entry point
-[ "$#" -eq 1 ] || die "syntax: script [archive]" # check number of arguments
-[ -f $1 ] || die "$1 does not exist" # check existance of file $1
-mkdir $d
-unzip $1 -d $d
-cd $d
-process
+main $1
