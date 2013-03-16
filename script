@@ -71,6 +71,8 @@ function cdDir {
 function doCheckstyle {
     #TODO: replace by modified version, use prettier output format
     checkstyle -c "$libdir/../checkstyle-2ip15.xml" -o checkstyle.txt -r src/
+    #java -cp "$libdir/checkstyle-5.6-custom.jar":"$libdir/commons-beanutils-core-1.8.3.jar":"$libdir/commons-cli-1.2.jar":"$libdir/commons-logging-1.1.1.jar":"$libdir/google-collections-1.0.jar" com.puppycrawl.tools.checkstyle.Main -c "$libdir/../checkstyle-2ip15.xml" -o checkstyle.txt -r src/
+    #java -cp "\"$libdir/*\"" com.puppycrawl.tools.checkstyle.Main -c "$libdir/../checkstyle-2ip15.xml" -o checkstyle.txt -r src/
 }
 
 # Generates Javadoc report for project in current directory.
