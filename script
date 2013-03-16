@@ -88,7 +88,10 @@ function doCobertura {
 # entry point function
 function main {
     [ "$#" -eq 1 ] || die "syntax: script [archive]" # check number of arguments
-    [ -f $1 ] || die "$1 does not exist" # check existance of file $1
+    [ -f $1 ] || die "$1 does not exist" # check existence of file $1
+    cd lib
+    libdir=$(pwd)
+    cd ..
     mkdir $d
     unzip -q -n "$1" -d $d
     cd $d
