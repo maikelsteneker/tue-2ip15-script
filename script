@@ -8,7 +8,7 @@ function die {
     exit 1
 }
 
-# Processes all files in the current directory.
+# Processes all subfolders in the current directory.
 function process {
     for f in *
     do
@@ -17,10 +17,22 @@ function process {
         do
             cd $g
             extract
+            processThis
             cd ..
         done
         cd ..;
     done
+}
+
+# Processes project in the current directory.
+function processThis {
+    enterDirectory
+    pwd
+    doCheckstyle
+    doJavadoc
+    #doJUnit # included in Cobertura
+    doCobertura
+    #cd .. # only do this if enterDirectory entered something
 }
 
 # Extracts all zip files in current directory.
@@ -30,15 +42,42 @@ function extract {
 
 # Exists the program if $1 does not exist.
 function checkExistance {
-    if [ ! -f $1 ]
-    then
-        die "$1 does not exist"
-    fi
+    [ -f $1 ] || die "$1 does not exist"
+}
+
+# Changes to a directory if its the only one in the current directory.
+function enterDirectory {
+    #TODO: write implementation
+    echo
+}
+
+# Generates checkstyle report for project in current directory.
+function doCheckstyle {
+    #TODO: write implementation
+    echo
+}
+
+# Generates Javadoc report for project in current directory.
+function doJavadoc {
+    #TODO: write implementation
+    echo
+}
+
+# Runs JUnit test cases and generates report in current directory.
+function doJUnit {
+    #TODO: write implementation
+    echo
+}
+
+# Generates Cobertura report for project in current directory.
+function doCobertura {
+    #TODO: write implementation
+    echo
 }
 
 # entry point
-[ "$#" -eq 1 ] || die "syntax: script [archive]"
-checkExistance $1
+[ "$#" -eq 1 ] || die "syntax: script [archive]" # check number of arguments
+[ -f $1 ] || die "$1 does not exist" # check existance of file $1
 mkdir $d
 unzip $1 -d $d
 cd $d
