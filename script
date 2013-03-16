@@ -28,8 +28,6 @@ function process {
 # Processes project in the current directory.
 function processThis {
     enterDirectory
-    #pwd
-    touch maikelwashere
     doCheckstyle
     doJavadoc
     #doJUnit # included in Cobertura
