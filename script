@@ -75,8 +75,9 @@ function doCheckstyle {
 
 # Generates Javadoc report for project in current directory.
 function doJavadoc {
-    packages=$(ls src) #TODO: improve to filter out files, support subpackages
-    javadoc -d $javadocdir -quiet -private -notree -noindex -nohelp -nonavbar -author -version -sourcepath src/ -docletpath "$libdir/PrePostDoclet.jar" -doclet nl.tue.doclets.PrePostDoclet $packages
+    # alternative: packages=$(ls src) #has trouble with extra files, subpackages
+    files=$(find ./src -type f -name "*.java")
+    javadoc -d $javadocdir -quiet -private -notree -noindex -nohelp -nonavbar -author -version -sourcepath src/ -docletpath "$libdir/PrePostDoclet.jar" -doclet nl.tue.doclets.PrePostDoclet $files
 }
 
 # Runs JUnit test cases and generates report in current directory.
