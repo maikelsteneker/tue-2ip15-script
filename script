@@ -77,7 +77,8 @@ function doCheckstyle {
 function doJavadoc {
     # alternative: packages=$(ls src) #has trouble with extra files, subpackages
     files=$(find ./src -type f -name "*.java")
-    javadoc -d $javadocdir -quiet -private -notree -noindex -nohelp -nonavbar -author -version -sourcepath src/ -docletpath "$libdir/PrePostDoclet.jar" -doclet nl.tue.doclets.PrePostDoclet $files
+    javadoc -d $javadocdir -quiet -private -notree -noindex -nohelp -nonavbar -author -version -sourcepath src/ -docletpath "$libdir/PrePostDoclet.jar" -doclet nl.tue.doclets.PrePostDoclet $files 2> javadoc.log
+    #TODO: check if log contains all output
 }
 
 # Runs JUnit test cases and generates report in current directory.
