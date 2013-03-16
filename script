@@ -1,7 +1,8 @@
 #!/bin/bash
 
-d=contents  # destination directory
-b=0         # set to 1 if enterDirectory changed the directory until it goes back
+d=contents              # destination directory
+b=0                     # set to 1 if enterDirectory changed the directory until it goes back
+javadocdir=./javadoc    # directory where javadoc output should be redirected to
 
 # Stops the script with an error message.
 function die {
@@ -37,7 +38,12 @@ function processThis {
 
 # Extracts all zip files in current directory.
 function extract {
-    for z in *.zip; do unzip -q -n "$z"; rm "$z"; done
+    for z in *.zip
+    do
+        unzip -q -n "$z"
+        rm "$z"
+        rm -rf __MACOSX # remove to detect whether the project is contained in a folder later
+    done
 }
 
 # Changes to a directory if its the only one in the current directory.
@@ -69,8 +75,8 @@ function doCheckstyle {
 
 # Generates Javadoc report for project in current directory.
 function doJavadoc {
-    #TODO: write implementation
-    test
+    packages=$(ls src) #TODO: improve to filter out files, support subpackages
+    javadoc -d $javadocdir -quiet -private -notree -noindex -nohelp -nonavbar -author -version -sourcepath src/ -docletpath "$libdir/PrePostDoclet.jar" -doclet nl.tue.doclets.PrePostDoclet $packages
 }
 
 # Runs JUnit test cases and generates report in current directory.
