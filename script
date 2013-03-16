@@ -1,4 +1,14 @@
 #!/bin/bash
+
+d=contents # destination directory
+
+# Stops the script with an error message.
+function die {
+    echo >&2 "$@"
+    exit 1
+}
+
+# Processes all files in the current directory.
 function process {
     for f in *
     do
@@ -13,11 +23,23 @@ function process {
     done
 }
 
+# Extracts all zip files in current directory.
 function extract {
-        for z in *.zip; do unzip "$z"; rm "$z"; done
+    for z in *.zip; do unzip "$z"; rm "$z"; done
 }
 
-mkdir contents
-unzip archive.zip -d contents
-cd contents
+# Exists the program if $1 does not exist.
+function checkExistance {
+    if [ ! -f $1 ]
+    then
+        die "$1 does not exist"
+    fi
+}
+
+# entry point
+[ "$#" -eq 1 ] || die "syntax: script [archive]"
+checkExistance $1
+mkdir $d
+unzip $1 -d $d
+cd $d
 process
