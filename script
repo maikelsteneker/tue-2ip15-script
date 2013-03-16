@@ -83,14 +83,16 @@ function doJavadoc {
 
 # Runs JUnit test cases and generates report in current directory.
 function doJUnit {
-    #TODO: write implementation
-    test # dummy statement
+    #TODO: replace by something better, more complete that works with cobertura
+    ant test 2> junit.log
 }
 
 # Generates Cobertura report for project in current directory.
 function doCobertura {
-    #TODO: write implementation
-    test # dummy statement
+    ant compile # N.B. needs ant and build.xml
+    cobertura-instrument build
+    doJUnit
+    cobertura-report --destination cobertura --source src/
 }
 
 # entry point function
@@ -107,4 +109,5 @@ function main {
 }
 
 # entry point
-main $1
+#main $1
+doJUnit
