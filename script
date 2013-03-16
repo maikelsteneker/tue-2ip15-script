@@ -69,8 +69,8 @@ function cdDir {
 
 # Generates checkstyle report for project in current directory.
 function doCheckstyle {
-    #TODO: write implementation
-    test # dummy statement
+    #TODO: replace by modified version, use prettier output format
+    checkstyle -c "$libdir/../checkstyle-2ip15.xml" -o checkstyle.txt -r src/
 }
 
 # Generates Javadoc report for project in current directory.
