@@ -93,6 +93,7 @@ function doCobertura {
     cobertura-instrument build
     doJUnit
     cobertura-report --destination cobertura --source src/
+    rm cobertura.ser
 }
 
 # entry point function
