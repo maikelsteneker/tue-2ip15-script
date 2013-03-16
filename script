@@ -70,7 +70,7 @@ function cdDir {
 # Generates checkstyle report for project in current directory.
 function doCheckstyle {
     #TODO: write implementation
-    test
+    test # dummy statement
 }
 
 # Generates Javadoc report for project in current directory.
@@ -83,13 +83,13 @@ function doJavadoc {
 # Runs JUnit test cases and generates report in current directory.
 function doJUnit {
     #TODO: write implementation
-    test
+    test # dummy statement
 }
 
 # Generates Cobertura report for project in current directory.
 function doCobertura {
     #TODO: write implementation
-    test
+    test # dummy statement
 }
 
 # entry point function
