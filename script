@@ -1,0 +1,23 @@
+#!/bin/bash
+function process {
+    for f in *
+    do
+        cd $f;
+        for g in *
+        do
+            cd $g
+            extract
+            cd ..
+        done
+        cd ..;
+    done
+}
+
+function extract {
+        for z in *.zip; do unzip "$z"; rm "$z"; done
+}
+
+mkdir contents
+unzip archive.zip -d contents
+cd contents
+process
