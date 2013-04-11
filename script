@@ -35,6 +35,7 @@ function processThis {
     #doJUnit # included in Cobertura
     doCobertura
     test $b -eq 0 || exitDirectory
+    find . -name '*.class' -exec rm {} + # remove classes
 }
 
 # Extracts all zip files in current directory.
