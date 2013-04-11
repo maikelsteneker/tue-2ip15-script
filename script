@@ -15,6 +15,7 @@ function process {
     for f in *
     do
         cd $f;
+        echo ${PWD##*/} # display id (top level directory)
         for g in *
         do
             cd $g
