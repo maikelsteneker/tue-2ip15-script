@@ -83,7 +83,7 @@ function doJavadoc {
 # Runs JUnit test cases and generates report in current directory.
 function doJUnit {
     files=$(find ./src ./test -type f -name "*.java")
-    classes=$(cd ./test && for F in $(find . -name "*.java"); do echo "$F" | sed 's,\./\(.*\)\.java,\1,' | sed 's,/,.,g'; done)
+    classes=$(cd ./test && for F in $(find . -name "*Test.java"); do echo "$F" | sed 's,\./\(.*\)\.java,\1,' | sed 's,/,.,g'; done)
     javac -cp "$libdir/hamcrest-core-1.3.jar:$libdir/junit-4.11.jar:src/:test/" $files
     java -cp "$libdir/hamcrest-core-1.3.jar:$libdir/junit-4.11.jar:src/:test/" org.junit.runner.JUnitCore $classes > junit.log
 }
